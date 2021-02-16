@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="image/png" href="Inicio_archivos/logo%2520suralum%2520png%2520-%2520copia.png">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="Inicio_archivos/bootstrap.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Inicio_archivos/bootstrap.css">
+    <script src="Inicio_archivos/jquery.js"></script>
+    <script src="Inicio_archivos/popper.js"></script>
+    <script src="Inicio_archivos/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="Inicio_archivos/estilo.css">
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- header -->
+
+<div id="head">
+    <div id="jum" class="jumbotron text-center">
+        <img id="headimg" class="img-fluid" src="Inicio_archivos/logo%2520suralum%2520png.png">
+    </div>
+</div>
+
+<!-- navbar -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <a class="navbar-brand" href="#"> <img src="Inicio_archivos/logo%2520suralum%2520png%2520-%2520copia.png" alt="" width="30" height="30"> Suralum </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav">
+            <li class="nav-item active"><a class="nav-link" href="http://www.suralum.cl/index.php"> Inicio</a></li>
+            <li class="nav-item active"><a class="nav-link" href="http://www.suralum.cl/contacto"> Contacto</a></li>
+            <form action="lineaHuracan.php" method="post"><li class="nav-item"><a id="huracan" class="nav-link lineaLink"> Huracán<input type="hidden" name="linea" value="100"></a></li></form>
+            <li class="nav-item active"><a class="nav-link" href="http://www.suralum.cl/ubicacion.php"> Ubicación</a></li>
+            <li class="nav-item active"><a class="nav-link" href="http://www.suralum.cl/cart.php"> Cotizacion</a></li>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProductos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Productos </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownProductos">
+                    <form action="linea.php" method="post"><a class="dropdown-item lineaLink">Hogar<input type="hidden" name="linea" value="1"></a></form><form action="linea.php" method="post"><a class="dropdown-item lineaLink">Reposteria<input type="hidden" name="linea" value="2"></a></form><form action="linea.php" method="post"><a class="dropdown-item lineaLink">Industrial<input type="hidden" name="linea" value="3"></a></form>                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- contenido-->
+
+<div class="container"><br>
+    <div id="crslSeccion" class="row">
+
+        <samp id="crslCant" style="opacity: 0; z-index: -30000; position: absolute;">3</samp> <!-- span para contar los crsl -->
+
+        <div id="crsl-1" class="col-md-4 lineas">         <form action="linea.php" method="post"> 
+<div id="demo2" class="carousel slide" data-pause="false" data-ride="carousel" style="pointer-events:auto"><a href="#">
+                <div id="crsl_1 "></div>
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item"><img src="Inicio_archivos/familia%2520suralum.jpg" alt="Hogar"></div>
+                    <div class="carousel-item active"><img src="Inicio_archivos/arrocera%2520hogar1.jpg" alt="Hogar"></div>
+                    <div class="carousel-item"><img src="Inicio_archivos/tetera1.jpg" alt="Hogar"></div>
+                </div>
+            </a></div>
+<input type="hidden" name="linea" value="1">
+
+            <div class="jumbotron descripcionMas shadow edt" contenteditable="false">
+                <h3>Hogar</h3>
+                <br>
+                <p class="textJustify">Nuestra línea hogar, es una línea
+ orientada a brindar los mejores productos del mercado para la cocina de
+ nuestros clientes.&nbsp;</p>
+            </div></form>          </div><div id="crsl-2" class="col-md-4 lineas">          <form action="linea.php" method="post"> 
+<div id="demo2" class="carousel slide" data-pause="false" data-ride="carousel" style="pointer-events:auto"><a href="#">
+                <div id="crsl_2 "></div>
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item"><img src="Inicio_archivos/familia%2520reposteria.jpg" alt="Reposteria"></div>
+                    <div class="carousel-item active"><img src="Inicio_archivos/flanera1.jpg" alt="Reposteria"></div>
+                    <div class="carousel-item"><img src="Inicio_archivos/molde%2520de%2520kuchen1.jpg" alt="Reposteria"></div>
+                </div>
+            </a></div>
+<input type="hidden" name="linea" value="2">
+
+            <div class="jumbotron descripcionMas shadow edt" contenteditable="false">
+                <h3>Reposteria</h3>
+                <br>
+                <p class="textJustify">En esta línea encontrará todo lo que necesita para la confección de pasteles, tortas y cóctel.<br></p>
+            </div></form>           </div><div id="crsl-3" class="col-md-4 lineas">        <form action="linea.php" method="post"> 
+<div id="demo3" class="carousel slide" data-pause="false" data-ride="carousel" style="pointer-events:auto"><a href="#">
+                <div id="crsl_3 "></div>
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active"><img src="Inicio_archivos/olla%2520hotelera1.jpg" alt="Industrial"></div>
+                    <div class="carousel-item"><img src="Inicio_archivos/brasero1.jpg" alt="Industrial"></div>
+                    <div class="carousel-item"><img src="Inicio_archivos/familia%2520industrial.jpg" alt="Industrial"></div>
+                </div>
+            </a></div>
+<input type="hidden" name="linea" value="3">
+            <div class="jumbotron descripcionMenos shadow edt" contenteditable="false">
+                <h3>Industrial</h3>
+                <br>
+                <p class="textJustify">La línea industrial se centra en 
+satisfacer las necesidades de la industria gastronómica, hotelera y 
+lechera, con productos resistentes y duraderos.<br></p>
+            </div> </form>        </div>    </div>
+
+</div>
+
+<div id="txtSeccion">
+    <samp id="txtCant" style="opacity: 0; z-index: -30000; position: absolute;">4</samp> <!-- span para contar los parrafos(txt) -->
+
+    <div id="txt-1" class="container-fluid bx">      <div id="txt_1 "></div>
+        <div class="container edt" contenteditable="false">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 id="porque">Quienes somos</h2>
+
+                    <p class="textJustify"><br></p><p class="textJustify">Suralum
+ MR, es una empresa del sur de Chile, dedicada a la fabricación y 
+comercialización de menaje para el hogar y la industria. Desde su 
+fundación en el año 1996 en la ciudad de Santiago, se orientó a diseñar y
+ ofrecer productos de alta gama para cualquier estrato social.<br><br>Actualmente
+ la empresa se encuentra ubicada en Pedro de Valdivia #496, Paillaco, 
+Región de Los Ríos, Chile, lugar en que se desarrollan todas sus 
+actividades.<br><br>Los productos y su calidad son garantizados por el 
+trabajo de un equipo humano altamente capacitado y un estricto control 
+de calidad presente en cada una de las fases productivas.<br><br>Recientemente
+ ha sectorizado sus operaciones en dos grandes Departamentos, el 
+departamento de administración y ventas y el departamento de producción.
+ Este último se divide en subdepartamentos de producción por área 
+especializada.<br></p>
+                </div>
+
+
+                <div class="col-md-6 fachadaDiv">
+                    <span class="imgHelper"></span>
+                    <img class="img-thumbnail fachada" src="Inicio_archivos/IMG_20181124_135101.jpg">
+                </div>
+            </div>
+             <span id="vision"></span>
+        </div>      </div><div id="txt-2" class="container edt misionContainer" contenteditable="false">  <div id="txt_2 "></div>
+        <div class="row rowMision">
+
+
+            <div class="col-md-6 misionFotoDiv">
+                <span class="imgHelperMision"></span>
+                <img class="img-thumbnail misionFoto" src="Inicio_archivos/mision.jpg">
+            </div>
+
+
+            <div class="col-md-6 misionTexto">
+                <h2>Misión</h2>
+
+                <br><br><br>
+
+                <p class="textJustify">
+                    Fabricar y comercializar productos de primera 
+calidad para el hogar y la industria, preocupados por el bienestar del 
+medio ambiente.
+                </p>
+            </div>
+
+        </div>  </div><div id="txt-3" class="container-fluid bx">     <div id="txt_3 "></div>
+        <div class="container edt" id="valores" contenteditable="false">
+
+            <div class="row">
+                <div class="col-md-6 divVisionTexto">
+                    <h2><span style="color: inherit; font-family: inherit; font-size: 2rem;">Visión</span><br></h2>
+
+                    <br>
+
+                    <p class="textJustify">
+                        Convertirnos en la empresa líder en el mercado a
+ nivel nacional, teniendo cobertura desde Arica a Punta Arenas, llevando
+ productos de primera calidad a su hogar.
+                    </p>
+                </div>
+
+
+                <div class="col-md-6 divVision">
+                    <span class="imgHelperVision"></span>
+                    <img class="img-thumbnail imagenVision" src="Inicio_archivos/vision.jpeg">
+                </div>
+            </div>
+        </div>     </div><div id="txt-4" class="container edt valoresContainer" contenteditable="false">   <div id="txt_4 "></div>
+        <div class="row rowValores">
+            <div class="col-md-6 fotoValoresDiv">
+                <span class="imgHelperValores"></span>
+                <img class="img-thumbnail fotoValores" src="Inicio_archivos/valores.jpg">
+            </div>
+            <div class="col-md-6 valoresTexto">
+                <h2 id="mision">Valores</h2><div><br></div>
+                <p class="textJustify">Responsabilidad: Tratamos de 
+responder a la brevedad posible las consultas y pedidos de nuestros 
+clientes fomentando la confianza y credibilidad.<br><br>Respeto: Expresado en consideración y reconocimiento a las personas, sea cual sea su condición o posición.<br><br>Trabajo
+ en equipo: Fomentamos las buenas relaciones entre el personal y los 
+equipos de trabajo con la creencia de que la unión hace la fuerza.<br><br>Innovación: Siempre se está a la vanguardia mejorando y cambiando cada día. “el cambio nos permite ser cada día mejores”.<br></p>
+            </div>
+        </div>   </div>
+</div>
+
+
+<!-- footer -->
+
+<div id="foot" class="jumbotron text-center" style="margin-bottom:0">
+    <div class="row" style="padding-bottom: 0px; padding-top: 0px;">
+        <div class="col-md-4" contenteditable="false">
+            <p><img src="Inicio_archivos/logo%2520suralum%2520png%2520-%2520copia.png" width="20" height="20"> Suralum</p>
+            <p>Pedro de Valdivia, Paillaco, Region de Los Rios</p>
+            <p>ventas@aluminiosuralum.cl</p>
+            <p>Fono: +56632421524</p>
+        </div>
+        <div class="col-md-4" contenteditable="false">
+            <p>REDES SOCIALES</p>
+            <hr>
+           <p>
+               <img src="Inicio_archivos/faceIcon.png" width="20" height="20">
+               <a class="faceLink" href="https://www.facebook.com/Aluminios-Suralum-1525459614392295/">   Aluminios Suralum </a>
+           </p>
+        </div>
+        <div class="col-md-4" contenteditable="false">
+            <p>Producto chileno</p>
+            <p>Nuestros productos son de manufacturacion chilena <img src="Inicio_archivos/banChi.png" width="30" height="20"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.carousel').carousel({
+        pause: "false"
+    });
+    $("[id^='demo']").click(function() {
+        $(this).parent('form').submit();
+    });
+    $(".lineaLink").click(function () {
+        $(this).closest('form').submit();
+    });
+    $(document).ready(function() {
+        $('.edt').attr('contenteditable', 'false');
+    });
+</script>
+</body></html>

@@ -1,0 +1,1 @@
+En esta version se encuentra funcionando la interfaz gráfica básica, se crea el arreglo de periodos y descriptores
