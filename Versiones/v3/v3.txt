@@ -1,0 +1,1 @@
+En esta versión se guarda el mensaje json recibido por rbbtmq y se agrega a un pdf haciendo uso de reportlab
