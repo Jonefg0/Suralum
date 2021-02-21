@@ -7,26 +7,13 @@ import json
 
 def generar_reporte():
     seleccionados = [0,0,0,0,0,0,0]
-    if (estadistico_1.get()):
-        seleccionados[0] = 1
-
-    if (estadistico_2.get()):
-        seleccionados[1] = 1
-
-    if (estadistico_3.get()):
-        seleccionados[2] = 1
-
-    if (estadistico_4.get()):
-        seleccionados[3] = 1
-
-    if (estadistico_5.get()):
-        seleccionados[4] = 1
-
-    if (estadistico_6.get()):
-        seleccionados[5] = 1
-
-    if (estadistico_7.get()):
-        seleccionados[6] = 1
+    seleccionados[0] = estadistico_1.get()
+    seleccionados[1] = estadistico_2.get()
+    seleccionados[2] = estadistico_3.get()
+    seleccionados[3] = estadistico_4.get()
+    seleccionados[4] = estadistico_5.get()
+    seleccionados[5] = estadistico_6.get()
+    seleccionados[6] = estadistico_7.get()
 
   
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
@@ -100,11 +87,6 @@ borrar_button = Button(ventana, text = "Borrar periodo", font = ("Helvetica",18)
 
 #botón generar reporte
 r_button = Button(ventana, text = "Generar reporte", padx = 10, pady = 10, command = generar_reporte, font = ("Helvetica",16)).place(x = 700, y = 500 )
-
-
-
-
-       
 
 
 ventana.mainloop()
