@@ -14,15 +14,11 @@ def generar_reporte():
     seleccionados[4] = estadistico_5.get()
     seleccionados[5] = estadistico_6.get()
     seleccionados[6] = estadistico_7.get()
-
-  
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
     channel.queue_declare(queue='estadisticos')
     print("los estadisticos son: ",seleccionados)
-    msg = []
-    msg = periodos
-    msg.append(seleccionados)
+    msg = (periodos,"#",seleccionados)
     print("mensaje que se envía es : ", msg)
     channel.basic_publish(exchange='', routing_key='estadisticos', body = json.dumps(msg))
     seleccionados = [0,0,0,0,0,0,0]

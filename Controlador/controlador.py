@@ -16,6 +16,9 @@ def main():
         alpdf(str(mensaje))
     
     def alpdf(mensaje):
+        aux = mensaje.split('#')
+        print ("años: ", aux[0])
+        print("descriptores: ",aux [1])
         w, h = A4
         c = canvas.Canvas("Suralam.pdf", pagesize=A4)
         c.drawString(50, h - 50, mensaje)
@@ -40,13 +43,20 @@ def main():
             subtotal,
             fecha
             FROM
-            ventas""",)
-    def familia_más_ventas():# que familia es al que vendió más por cada periodo -> periodos[años],familia[string],ventas[valor]
+            ventas""")
+            
+    def familia_más_ventas():# que familia es al qu vendió más por cada periodo -> periodos[años],familia[string],ventas[valor]
+        return 0
     def Productos_más_vendido():#top 5 productos más vendidos, periodos [años],productos[largo(años)][nombre producto],totalproducto[largo(años)][valor_total]
-    def ventas total_familia_descriptivo(pos,periodo):# periodos[años],ventas_t[len(perodos)][4]
+        return 0
+    def ventas_total_familia_descriptivo(pos,periodo):# periodos[años],ventas_t[len(perodos)][4]
+        return 0
     def comparativo_Suralum(pos,periodo):#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][7 valores]
+        return 0
     def comparativo_Huracán(pos,periodo):#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
+        return 0
     def Comparativo_Industrial():#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
+        return 0
    
 
 
