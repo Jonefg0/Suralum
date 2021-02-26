@@ -6,6 +6,7 @@ from reportlab.graphics.charts.barcharts import VerticalBarChart
 from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
 import pprint
 
+
 def ventas_totales (pos,periodos,ventas_totales):
     arreglo = [periodos,ventas_totales]
     table = Table(arreglo, colWidths=3* cm)
