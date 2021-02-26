@@ -76,7 +76,7 @@ def comparativo_Huracán(pos,periodo):#productos más vendidos en suralum,ventat
 def Comparativo_Industrial(pos,periodo):#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
     return 0
 
-doc = SimpleDocTemplate("example.pdf", pagesize=letter)
+doc = SimpleDocTemplate("SURALUM.pdf", pagesize=letter)
 story = []
 periodos= [2017,2018,2019]
 vt = [11541548,156185612,56416646]

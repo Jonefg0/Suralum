@@ -49,9 +49,11 @@ def main():
                     total = total+ fname[1]
                     #print ("Values:", fname[1])
                 totales.append(total)
-            periodos= [2017,2018,2019]
+
+            
+            #periodos= [2017,2018,2019]
             vt = [11541548,156185612,56416646]
-            arreglo = [periodos,vt]
+            arreglo = [periodos,totales]
             table = Table(arreglo, colWidths=3* cm)
             table.setStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT')])
             for index, row in enumerate(arreglo):
@@ -63,8 +65,8 @@ def main():
                     ('BACKGROUND', ini, fin, bg_color)
                 ])
             story.append(table)
-            d = Drawing(400, 200)
-            data = [(11541548,15618561,56416646)]
+            d = Drawing(600, 200)
+            data = [totales]
             bc = VerticalBarChart()
             bc.x = 50
             bc.y = 50
@@ -73,19 +75,20 @@ def main():
             bc.data = data
             bc.strokeColor = colors.black
             bc.valueAxis.valueMin = 0
-            bc.valueAxis.valueMax = 60000000
-            bc.valueAxis.valueStep = 10000000  #paso de distancia entre punto y punto
+            bc.valueAxis.valueMax = 1000000000
+            bc.valueAxis.valueStep = 100000000  #paso de distancia entre punto y punto
             bc.categoryAxis.labels.boxAnchor = 'ne'
             bc.categoryAxis.labels.dx = 8
             bc.categoryAxis.labels.dy = -2
             bc.categoryAxis.labels.angle = 0
-            bc.categoryAxis.categoryNames =['2017','2018','2019']
+            bc.categoryAxis.categoryNames = periodos
             bc.groupSpacing = 10
             bc.barSpacing = 2
             #bc.categoryAxis.style = 'stacked'  # Una variación del gráfico
             d.add(bc)
             #pprint.pprint(bc.getProperties())
-            #story.append(d)
+            story.append(d)
+            print(story)
             doc.build(story)
                 
        
@@ -107,7 +110,7 @@ def main():
         if (int(descriptores[6][1:])):
             print("mas vendido")
         
-        doc.build(story)
+     #   doc.build(story)
 
     
     channel.basic_consume(queue='estadisticos', on_message_callback = callback, auto_ack = True)
@@ -116,10 +119,10 @@ def main():
 
 
     #consultas
-'''
+
     def ventas_totales (pos,periodos):#ventas totales en cada periodo -> periodos[],totales[]
         return 0   
-    def familia_más_ventas():# que familia es al qu vendió más por cada periodo -> periodos[años],familia[string],ventas[valor]
+    def familia_más_ventas():# que familia es al que vendió más por cada periodo -> periodos[años],familia[string],ventas[valor]
         return 0
     def Productos_más_vendido():#top 5 productos más vendidos, periodos [años],productos[largo(años)][nombre producto],totalproducto[largo(años)][valor_total]
         return 0
@@ -132,7 +135,7 @@ def main():
     def Comparativo_Industrial():#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
         return 0
    
-'''
+
 
 
 if __name__=='__main__':
