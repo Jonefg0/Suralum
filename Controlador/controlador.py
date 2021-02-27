@@ -49,10 +49,6 @@ def main():
                     total = total+ fname[1]
                     #print ("Values:", fname[1])
                 totales.append(total)
-
-            
-            #periodos= [2017,2018,2019]
-            vt = [11541548,156185612,56416646]
             arreglo = [periodos,totales]
             table = Table(arreglo, colWidths=3* cm)
             table.setStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT')])
@@ -92,10 +88,35 @@ def main():
             doc.build(story)
                 
        
-        if (int(descriptores[1][1:])):
-            print("ventas por lineas")
-
         if (int(descriptores[2][1:])):
+            print("ventas por familia")
+            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            cursor = connection_ddbb.cursor()
+            totales= [] 
+            for i in periodos:
+                cursor.execute("""SELECT
+                productos.id_familia,
+                SUM(venta_productos.cantidad) as c,
+                SUM(venta_productos.precio)               
+                FROM
+                    venta_productos INNER JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
+                WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND(productos.id_familia=1 OR productos.id_familia=2 OR productos.id_familia=3)
+                GROUP BY
+                    productos.id_familia
+                ORDER BY
+                    productos.id_familia ASC
+                """)
+                vt = []
+                for valor in cursor:
+                    print ("Values:", valor)
+                    vt.append(valor[2])
+                    print(vt)
+                totales.append(vt)
+            print(totales)
+
+
+
+        if (int(descriptores[1][1:])):
             print("Ventas por familia")
 
         if (int(descriptores[3][1:])):
