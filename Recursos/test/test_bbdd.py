@@ -22,8 +22,6 @@ ORDER BY
     c DESC
 """)
 
-for valor in cursor:
-    print ("Values:", valor)
 
 print("#################################################################")
 
@@ -39,8 +37,11 @@ WHERE EXTRACT(YEAR FROM ventas.fecha) = """+año+"""AND(productos.id_familia=1 O
 GROUP BY
     productos.id_familia
 ORDER BY
-    c ASC
+     ASC
 """)
+
+for valor in cursor:
+    print ("Values:", valor)
 
 #total = 0
 #vt = []
