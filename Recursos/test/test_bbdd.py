@@ -15,12 +15,15 @@ cursor.execute("""SELECT
     SUM(venta_productos.precio)
 FROM
     venta_productos INNER JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
-WHERE EXTRACT(YEAR FROM ventas.fecha) = 2019 AND productos.id_familia=2
+WHERE EXTRACT(YEAR FROM ventas.fecha) = 2019 AND productos.id_familia=1
 GROUP BY
     productos.descripcion
 ORDER BY
     c DESC
 """)
+
+for valor in cursor:
+    print ("Values:", valor)
 
 print("#################################################################")
 
@@ -36,15 +39,15 @@ WHERE EXTRACT(YEAR FROM ventas.fecha) = """+año+"""AND(productos.id_familia=1 O
 GROUP BY
     productos.id_familia
 ORDER BY
-    productos.id_familia ASC
+    c ASC
 """)
 
-total = 0
-vt = []
-for valor in cursor:
-    print ("Values:", valor)
-    vt.append(valor[2])
-print(vt)
+#total = 0
+#vt = []
+#for valor in cursor:
+#    print ("Values:", valor)
+#    vt.append(valor[2])
+#print(vt)
 
 #for fname in cursor:
 #    print ("Familia:", fname)
