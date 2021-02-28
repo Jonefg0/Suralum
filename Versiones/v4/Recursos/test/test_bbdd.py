@@ -3,25 +3,40 @@ import cx_Oracle
 connection = cx_Oracle.connect("nathan", "m94", "localhost")
 cursor = connection.cursor()
 
+año ='2019'
 
-
-año ='2017'
-cursor.execute("SELECT id_venta, subtotal, fecha FROM ventas WHERE EXTRACT(YEAR FROM fecha) = " + año)
-
-#consulta total venta familia por periodo
 cursor.execute("""SELECT
-    SUM(ventas.subtotal) as c
-FROM
-    ventas
-WHERE EXTRACT(YEAR FROM ventas.fecha) = 2017
-""")
-total = 0
+                    productos.descripcion,
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c,
+                    productos.id_familia
+                FROM
+                    venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
+                WHERE EXTRACT(YEAR FROM ventas.fecha) = """+año+"""
+                GROUP BY 
+                    productos.descripcion
+                ORDER BY
+                    v ASC"""
+                )
 for valor in cursor:
     print ("Values:", valor)
+
+#cursor.execute("SELECT id_venta, subtotal, fecha FROM ventas WHERE EXTRACT(YEAR FROM fecha) = " + año)
+
+#consulta total venta familia por periodo
+#cursor.execute("""SELECT
+#    SUM(ventas.subtotal) as c
+#FROM
+#    ventas
+#WHERE EXTRACT(YEAR FROM ventas.fecha) = 2017
+#""")
+#total = 0
+#for valor in cursor:
+#    print ("Values:", valor)
   
   #  total = total + valor[1]
 
-print("#############################",total*0.81,"####################################")
+#print("#############################",total*0.81,"####################################")
 
 #total familias
 #cursor.execute("""SELECT
@@ -59,21 +74,5 @@ print("#############################",total*0.81,"##############################
 #for fname in cursor:
 #    print ("Familia:", fname)
 
-
-
-cursor.execute("""SELECT
-                productos.id_familia,
-                SUM(venta_productos.cantidad * venta_productos.precio) as c     
-                FROM
-                    venta_productos INNER JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
-                WHERE EXTRACT(YEAR FROM ventas.fecha) = """+año+"""
-                GROUP BY
-                    productos.id_familia
-                ORDER BY
-                    productos.id_familia ASC
-                """)
-
-for valor in cursor:
-    print ("Values:", valor)
 
   

@@ -14,7 +14,9 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.enums import TA_CENTER
 import pprint
 import locale
-
+usr='nathan'
+passw='m94'
+logotipo = "logo.png"
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host ='localhost'))
@@ -23,7 +25,7 @@ def main():
     
     def callback(ch,method,properties,body):
         mensaje = json.loads(body)
-        print("se recibe: %r"% mensaje)
+        #print("se recibe: %r"% mensaje)
         alpdf(str(mensaje))
     
     def alpdf(mensaje):
@@ -34,10 +36,13 @@ def main():
         #valor = int(descriptores[0])
         #print("valor:",valor)
         #año = int(años_final[0][1:-1])
-        print("descriptores: ",descriptores)
-        print("periodos ",periodos)
+        #print("descriptores: ",descriptores)
+        #print("periodos ",periodos)
         doc = SimpleDocTemplate("SURALUM.pdf", pagesize=letter)
         story = []
+        imagen = Image(logotipo, 7 * cm, 3 * cm)
+        story.append(imagen)
+        story.append(Spacer(10, 20))
         styles = getSampleStyleSheet()
         styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER))
     
@@ -45,7 +50,7 @@ def main():
             print("ventas_totales")
             story.append(Paragraph('Ventas Totales por Año', styles['title']))
             totales = []
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()   
             for i in periodos:
                 print()
@@ -57,7 +62,8 @@ def main():
                     #print ("Values:", fname[1])
                 totales.append(total)
             arreglo = [periodos,totales]
-            table = Table(arreglo, colWidths=3* cm)
+
+            table = Table(arreglo, colWidths=4* cm)
             table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
             for index, row in enumerate(arreglo):
                 bg_color = colors.yellow
@@ -65,10 +71,10 @@ def main():
                 table.setStyle([
                     ("BOX", ini, fin, 0.25, colors.black),
                     ('INNERGRID', ini, fin, 0.25, colors.black),
-                    ('BACKGROUND', ini, fin, bg_color)
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.gray)
                 ])
             story.append(table)
-            d = Drawing(600, 200)
+            d = Drawing(300, 200)
             data = [totales]
             bc = VerticalBarChart()
             bc.x = 50
@@ -87,19 +93,18 @@ def main():
             bc.categoryAxis.categoryNames = periodos
             bc.groupSpacing = 10
             bc.barSpacing = 4
-            bc.barLabelFormat = '%d'
-            bc.valueAxis.labelTextFormat = ' $ %d '
+            bc.barLabelFormat = '$%d'
+            bc.valueAxis.labelTextFormat = ' $%d '
             bc.barLabels.nudge = 7
-            #bc.categoryAxis.style = 'stacked'  # Una variación del gráfico
             d.add(bc)
             #pprint.pprint(bc.getProperties())
             story.append(d)
-            print(story)
+            #print(story)
    
         if (int(descriptores[2][1:])):
             print("ventas por familia")
             story.append(Paragraph('Ventas por Familia', styles['title']))
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()
             totales  = [('Periodo','Suralum','Huracan','Industrial')]
             valores_g = []
@@ -113,19 +118,19 @@ def main():
                 GROUP BY
                     productos.id_familia
                 ORDER BY
-                    productos.id_familia ASC
+                    productos.id_familia DESC
                 """)
                 vt=[(i)]
                 vg =[]
                 for valor in cursor:
-                    print ("Values:", valor)
+                    #print ("Values:", valor)
                     vt.append(valor[1])
                     vg.append(valor[1])
-                    print(vt)
+                    #print(vt)
                 totales.append(vt)
                 valores_g.append(vg)
 
-            table = Table(totales, colWidths=3*cm)
+            table = Table(totales, colWidths=4*cm)
             table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
             for index, row in enumerate(totales):
                 bg_color = colors.yellowgreen
@@ -133,7 +138,8 @@ def main():
                 table.setStyle([
                     ("BOX", ini, fin, 0.25, colors.black),
                     ('INNERGRID', ini, fin, 0.25, colors.black),
-                    ('BACKGROUND', ini, fin, bg_color)
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+                    ('BACKGROUND', (0, -1), fin, colors.gray)
                 ])
             story.append(table)
             d = Drawing(600, 200)
@@ -153,10 +159,10 @@ def main():
             bc.categoryAxis.labels.dy = -2
             bc.categoryAxis.labels.angle = 0
             bc.categoryAxis.categoryNames = ('Suralum','Huracan','Industrial')
-            bc.valueAxis.labelTextFormat = ' $ %d '
+            bc.valueAxis.labelTextFormat = ' $%d '
             bc.groupSpacing = 10
             bc.barSpacing = 4
-            bc.barLabelFormat = '%d'
+            bc.barLabelFormat = '$%d'
             bc.barLabels.nudge = 7
             #bc.categoryAxis.style = 'stacked'  # Una variación del gráfico
             d.add(bc)
@@ -166,28 +172,25 @@ def main():
 
         
 
-        if (int(descriptores[1][1:])):
-            print("Ventas por familia")
-
         if (int(descriptores[3][1:])):
             print("Suralum")
             story.append(Paragraph('Ventas Suralum', styles['title']))
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()
             
             for i in periodos:
-                print("para el periodo:",i)
+                #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
-                    SUM(venta_productos.cantidad) as c,
-                    SUM(ventas.total) as v
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
                 FROM
                     venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
                 WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND productos.id_familia=1
                 GROUP BY
                     productos.descripcion
                 ORDER BY
-                    c DESC""")
+                    v DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -200,7 +203,7 @@ def main():
                         producto.append(valor[2])#totales_ventas
                         totales.append(producto)
                     k = k+1
-                table = Table(totales, colWidths=3*cm)
+                table = Table(totales, colWidths=4*cm)
                 table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
                 for index, row in enumerate(totales):
                     bg_color = colors.green
@@ -220,22 +223,22 @@ def main():
             print("Huracan")
 
             story.append(Paragraph('Ventas por Huracan', styles['title']))
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()
             
             for i in periodos:
-                print("para el periodo:",i)
+                #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
-                    SUM(venta_productos.cantidad) as c,
-                    SUM(ventas.total) as v
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
                 FROM
                     venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
                 WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND productos.id_familia=2
                 GROUP BY
                     productos.descripcion
                 ORDER BY
-                    c DESC""")
+                    v DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -250,7 +253,7 @@ def main():
                         k = k+1
 
 
-                table = Table(totales, colWidths=3*cm)
+                table = Table(totales, colWidths=4*cm)
                 table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
                 for index, row in enumerate(totales):
                     bg_color = colors.violet
@@ -272,22 +275,22 @@ def main():
             print("Industrial")
 
             story.append(Paragraph('Ventas Industrial', styles['title']))
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()
             
             for i in periodos:
-                print("para el periodo:",i)
+                #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
-                    SUM(venta_productos.cantidad) as c,
-                    SUM(ventas.total) as v
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
                 FROM
                     venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
                 WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND productos.id_familia=3
                 GROUP BY
                     productos.descripcion
                 ORDER BY
-                    c DESC""")
+                    v DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -300,7 +303,7 @@ def main():
                         producto.append(valor[2])#totales_ventas
                         totales.append(producto)
                     k = k+1
-                table = Table(totales, colWidths=3*cm)
+                table = Table(totales, colWidths=4*cm)
                 table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
                 for index, row in enumerate(totales):
                     bg_color = colors.aqua
@@ -318,20 +321,20 @@ def main():
         if (int(descriptores[6][1:])):
             print("mas vendido")
             story.append(Paragraph('PRODUCTOS MÁS VENDIDOS', styles['title']))
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()
             for i in periodos:
                 cursor.execute("""SELECT
-                        productos.descripcion,
-                        SUM(venta_productos.cantidad) as c,
-                        SUM(ventas.total) as v
-                    FROM
-                        venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
-                    WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""
-                    GROUP BY
-                        productos.descripcion
-                    ORDER BY
-                        c DESC"""
+                    productos.descripcion,
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
+                FROM
+                    venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
+                WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""
+                GROUP BY
+                    productos.descripcion
+                ORDER BY
+                    v DESC"""
                 )
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -342,9 +345,10 @@ def main():
                         producto.append(valor[0])#nombre
                         producto.append(valor[1])#totales_ccantidad
                         producto.append(valor[2])#totales_ventas
+                        #producto.append(valor[3])#familia
                         totales.append(producto)
                     k = k+1
-                table = Table(totales, colWidths=3*cm)
+                table = Table(totales, colWidths=4*cm)
                 table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
                 for index, row in enumerate(totales):
                     bg_color = colors.aqua
@@ -358,60 +362,6 @@ def main():
                 story.append(table)
                 story.append(Spacer(10, 20))  
         doc.build(story)
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     #   doc.build(story)
 
     
     channel.basic_consume(queue='estadisticos', on_message_callback = callback, auto_ack = True)
@@ -435,29 +385,6 @@ def main():
         return 0
     def Comparativo_Industrial():#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
         return 0
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__=='__main__':
