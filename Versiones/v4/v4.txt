@@ -1,0 +1,1 @@
+En esta versión se encuentra en funcionamientos todas las funciones básicas propuesta, se genera el pdf con las tablas y gráficos primarios que permiten obtener una visión clara de los datos requeridos. 
