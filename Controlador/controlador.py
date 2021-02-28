@@ -71,7 +71,7 @@ def main():
                 table.setStyle([
                     ("BOX", ini, fin, 0.25, colors.black),
                     ('INNERGRID', ini, fin, 0.25, colors.black),
-                    ('BACKGROUND', ini, fin, bg_color)
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.gray)
                 ])
             story.append(table)
             d = Drawing(300, 200)
@@ -138,7 +138,8 @@ def main():
                 table.setStyle([
                     ("BOX", ini, fin, 0.25, colors.black),
                     ('INNERGRID', ini, fin, 0.25, colors.black),
-                    ('BACKGROUND', ini, fin, bg_color)
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+                    ('BACKGROUND', (0, -1), fin, colors.gray)
                 ])
             story.append(table)
             d = Drawing(600, 200)
@@ -278,7 +279,7 @@ def main():
             cursor = connection_ddbb.cursor()
             
             for i in periodos:
-                print("para el periodo:",i)
+                #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
                     SUM(venta_productos.cantidad) as c,
