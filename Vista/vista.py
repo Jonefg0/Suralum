@@ -2,6 +2,7 @@ from tkinter import *
 import numpy as np
 import pika
 import json
+import locale
 
 #funciones
 
