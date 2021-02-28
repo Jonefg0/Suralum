@@ -14,8 +14,8 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.enums import TA_CENTER
 import pprint
 import locale
-usr='ragde'
-passw='erty8040'
+usr='nathan'
+passw='m94'
 logotipo = "logo.png"
 
 def main():
@@ -118,7 +118,7 @@ def main():
                 GROUP BY
                     productos.id_familia
                 ORDER BY
-                    productos.id_familia ASC
+                    productos.id_familia DESC
                 """)
                 vt=[(i)]
                 vg =[]
@@ -182,15 +182,15 @@ def main():
                 #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
-                    SUM(venta_productos.cantidad) as c,
-                    SUM(ventas.total) as v
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
                 FROM
                     venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
                 WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND productos.id_familia=1
                 GROUP BY
                     productos.descripcion
                 ORDER BY
-                    c DESC""")
+                    v DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -230,15 +230,15 @@ def main():
                 #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
-                    SUM(venta_productos.cantidad) as c,
-                    SUM(ventas.total) as v
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
                 FROM
                     venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
                 WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND productos.id_familia=2
                 GROUP BY
                     productos.descripcion
                 ORDER BY
-                    c DESC""")
+                    v DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -282,15 +282,15 @@ def main():
                 #print("para el periodo:",i)
                 cursor.execute("""SELECT
                     productos.descripcion,
-                    SUM(venta_productos.cantidad) as c,
-                    SUM(ventas.total) as v
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
                 FROM
                     venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
                 WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""AND productos.id_familia=3
                 GROUP BY
                     productos.descripcion
                 ORDER BY
-                    c DESC""")
+                    v DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -325,16 +325,16 @@ def main():
             cursor = connection_ddbb.cursor()
             for i in periodos:
                 cursor.execute("""SELECT
-                        productos.descripcion,
-                        SUM(venta_productos.cantidad) as c,
-                        SUM(ventas.total) as v
-                    FROM
-                        venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
-                    WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""
-                    GROUP BY
-                        productos.descripcion
-                    ORDER BY
-                        c DESC"""
+                    productos.descripcion,
+                    SUM(venta_productos.cantidad) as v,
+                    SUM(venta_productos.cantidad * venta_productos.precio) as c
+                FROM
+                    venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
+                WHERE EXTRACT(YEAR FROM ventas.fecha) = """+i+"""
+                GROUP BY
+                    productos.descripcion
+                ORDER BY
+                    v DESC"""
                 )
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
@@ -345,6 +345,7 @@ def main():
                         producto.append(valor[0])#nombre
                         producto.append(valor[1])#totales_ccantidad
                         producto.append(valor[2])#totales_ventas
+                        #producto.append(valor[3])#familia
                         totales.append(producto)
                     k = k+1
                 table = Table(totales, colWidths=4*cm)
