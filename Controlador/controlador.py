@@ -11,6 +11,7 @@ from reportlab.graphics.charts.barcharts import VerticalBarChart
 from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.enums import TA_CENTER
 import pprint
 import locale
 
@@ -38,6 +39,7 @@ def main():
         doc = SimpleDocTemplate("SURALUM.pdf", pagesize=letter)
         story = []
         styles = getSampleStyleSheet()
+        styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER))
     
         if (int(descriptores[0])):#VENTAS TOTALES
             print("ventas_totales")
@@ -56,7 +58,7 @@ def main():
                 totales.append(total)
             arreglo = [periodos,totales]
             table = Table(arreglo, colWidths=3* cm)
-            table.setStyle([('ALIGN', (0, 0), (-1, -1), 'LEFT')])
+            table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTRO')])
             for index, row in enumerate(arreglo):
                 bg_color = colors.yellow
                 ini, fin = (0, index), (len(row)-1, index)
@@ -93,13 +95,6 @@ def main():
             #pprint.pprint(bc.getProperties())
             story.append(d)
             print(story)
-            style = ParagraphStyle(
-                    name='Normal',
-                    fontName='Arial',
-                    fontSize=8,
-                    )
-          
-
    
         if (int(descriptores[2][1:])):
             print("ventas por familia")
@@ -201,7 +196,7 @@ def main():
                 ORDER BY
                     c DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
-                story.append(Paragraph('Año:'+i, styles['Normal']))
+                story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
                 for valor in cursor:
@@ -251,7 +246,7 @@ def main():
                 ORDER BY
                     c DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
-                story.append(Paragraph('Año:'+i, styles['Normal']))
+                story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
                 for valor in cursor:
@@ -285,7 +280,7 @@ def main():
         if (int(descriptores[5][1:])):
             print("Industrial")
 
-            story.append(Paragraph('Ventas Industrial', styles['Normal']))
+            story.append(Paragraph('Ventas Industrial', styles['title']))
             connection_ddbb = cx_Oracle.connect("ragde", "erty8040", "localhost")
             cursor = connection_ddbb.cursor()
             
@@ -305,7 +300,7 @@ def main():
 
                 
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
-                story.append(Paragraph('Año:'+i, styles['Normal']))
+                story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
                 for valor in cursor:
