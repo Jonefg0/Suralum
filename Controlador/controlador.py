@@ -37,11 +37,13 @@ def main():
         print("periodos ",periodos)
         doc = SimpleDocTemplate("SURALUM.pdf", pagesize=letter)
         story = []
-
+        styles = getSampleStyleSheet()
+    
         if (int(descriptores[0])):#VENTAS TOTALES
             print("ventas_totales")
+            story.append(Paragraph('Ventas Totales por Año', styles['title']))
             totales = []
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            connection_ddbb = cx_Oracle.connect("ragde", "erty8040", "localhost")
             cursor = connection_ddbb.cursor()   
             for i in periodos:
                 print()
@@ -101,7 +103,8 @@ def main():
    
         if (int(descriptores[2][1:])):
             print("ventas por familia")
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+            story.append(Paragraph('Ventas por Familia', styles['title']))
+            connection_ddbb = cx_Oracle.connect("ragde", "erty8040", "localhost")
             cursor = connection_ddbb.cursor()
             totales  = [('Periodo','Suralum','Huracan','Industrial')]
             valores_g = []
@@ -179,9 +182,11 @@ def main():
 
         if (int(descriptores[3][1:])):
             print("Suralum")
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+
+            story.append(Paragraph('Ventas Suralum', styles['title']))
+            connection_ddbb = cx_Oracle.connect("ragde", "erty8040", "localhost")
             cursor = connection_ddbb.cursor()
-            totales = []
+            
             for i in periodos:
                 print("para el periodo:",i)
                 cursor.execute("""SELECT
@@ -196,7 +201,9 @@ def main():
                 ORDER BY
                     c DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
+                story.append(Paragraph('Año:'+i, styles['Normal']))
                 k= 0
+                totales = []
                 for valor in cursor:
                     producto = []
                     if (k < 12):
@@ -225,9 +232,11 @@ def main():
 
         if (int(descriptores[4][1:])):
             print("Huracan")
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+
+            story.append(Paragraph('Ventas por Huracan', styles['title']))
+            connection_ddbb = cx_Oracle.connect("ragde", "erty8040", "localhost")
             cursor = connection_ddbb.cursor()
-            totales = []
+            
             for i in periodos:
                 print("para el periodo:",i)
                 cursor.execute("""SELECT
@@ -242,7 +251,9 @@ def main():
                 ORDER BY
                     c DESC""")
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
+                story.append(Paragraph('Año:'+i, styles['Normal']))
                 k= 0
+                totales = []
                 for valor in cursor:
                     producto = []
                     if (k < 12):
@@ -273,9 +284,11 @@ def main():
 
         if (int(descriptores[5][1:])):
             print("Industrial")
-            connection_ddbb = cx_Oracle.connect("nathan", "m94", "localhost")
+
+            story.append(Paragraph('Ventas Industrial', styles['Normal']))
+            connection_ddbb = cx_Oracle.connect("ragde", "erty8040", "localhost")
             cursor = connection_ddbb.cursor()
-            totales = []
+            
             for i in periodos:
                 print("para el periodo:",i)
                 cursor.execute("""SELECT
@@ -292,8 +305,9 @@ def main():
 
                 
                 #AGREGAR TITULO DEL PERIODO AL STORY PARA SEPARAR LAS TABLAS
-
+                story.append(Paragraph('Año:'+i, styles['Normal']))
                 k= 0
+                totales = []
                 for valor in cursor:
                     producto = []
                     if (k < 12):
