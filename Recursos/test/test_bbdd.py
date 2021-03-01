@@ -5,21 +5,27 @@ cursor = connection.cursor()
 
 año ='2019'
 
-cursor.execute("""SELECT
-                    productos.descripcion,
-                    SUM(venta_productos.cantidad) as v,
-                    SUM(venta_productos.cantidad * venta_productos.precio) as c,
-                    productos.id_familia
-                FROM
-                    venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
-                WHERE EXTRACT(YEAR FROM ventas.fecha) = """+año+"""
-                GROUP BY 
-                    productos.descripcion
-                ORDER BY
-                    v ASC"""
-                )
-for valor in cursor:
-    print ("Values:", valor)
+#cursor.execute("""SELECT
+ #                   productos.descripcion,
+  #                  SUM(venta_productos.cantidad) as v,
+   #                 SUM(venta_productos.cantidad * venta_productos.precio) as c,
+    #                productos.id_familia
+       #         FROM
+        #            venta_productos JOIN productos ON venta_productos.id_producto = productos.id_producto JOIN ventas ON venta_productos.id_venta=ventas.id_venta
+         #       WHERE EXTRACT(YEAR FROM ventas.fecha) = """+año+"""
+          #      GROUP BY 
+           #         productos.descripcion
+            #    ORDER BY
+             #       v ASC"""
+nombreusuario_verify= 'brain'
+contrasenausuario_verify='brain'
+
+cursor.execute("SELECT password FROM  users WHERE username='"+nombreusuario_verify+"' and password='"+contrasenausuario_verify+"'")
+
+if cursor.fetchall():
+    print("INICIO CORRECTO")
+else:
+    print("NACA LA PIRINACA")
 
 #cursor.execute("SELECT id_venta, subtotal, fecha FROM ventas WHERE EXTRACT(YEAR FROM fecha) = " + año)
 

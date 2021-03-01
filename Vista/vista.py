@@ -1,11 +1,9 @@
 from tkinter import *
-import numpy as np
 import pika
 import json
 
 
 #funciones
-
 def generar_reporte():
     seleccionados = [0,0,0,0,0,0,0]
     seleccionados[0] = estadistico_1.get()
@@ -51,6 +49,8 @@ estadistico_6 = IntVar()
 estadistico_7 = IntVar()
 periodo = StringVar()
 periodos = []
+imagen = PhotoImage(file="bg.gif")
+Label(ventana,image=imagen).place(x=0,y=0)
 
 
 #cabecera
