@@ -1,0 +1,3 @@
+Programa funcionando en su totalidad, cumple con:
+ * Verificar usuario
+ *Crear pdf con todas las solicitudes entrantes y periodos entrantes
