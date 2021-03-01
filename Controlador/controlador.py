@@ -7,16 +7,20 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib.units import cm
+from reportlab.graphics.charts.legends import Legend
 from reportlab.graphics.charts.barcharts import VerticalBarChart
-from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line
+from reportlab.graphics.shapes import Drawing, Rect, String, Group, Line 
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.colors import Color, PCMYKColor
 from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.validators import Auto
 import pprint
 import locale
-usr='nathan'
-passw='m94'
+usr='ragde'
+passw='erty8040'
 logotipo = "logo.png"
+head=('Producto','Total vendidos','Total Ventas')
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host ='localhost'))
@@ -66,7 +70,6 @@ def main():
             table = Table(arreglo, colWidths=4* cm)
             table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
             for index, row in enumerate(arreglo):
-                bg_color = colors.yellow
                 ini, fin = (0, index), (len(row)-1, index)
                 table.setStyle([
                     ("BOX", ini, fin, 0.25, colors.black),
@@ -100,7 +103,7 @@ def main():
             #pprint.pprint(bc.getProperties())
             story.append(d)
             #print(story)
-   
+   #############################################################################################################################################################
         if (int(descriptores[2][1:])):
             print("ventas por familia")
             story.append(Paragraph('Ventas por Familia', styles['title']))
@@ -133,13 +136,12 @@ def main():
             table = Table(totales, colWidths=4*cm)
             table.setStyle([('ALIGN', (0, 0), (-1, -1), 'CENTER')])
             for index, row in enumerate(totales):
-                bg_color = colors.yellowgreen
                 ini, fin = (0, index), (len(row)-1, index)
                 table.setStyle([
                     ("BOX", ini, fin, 0.25, colors.black),
                     ('INNERGRID', ini, fin, 0.25, colors.black),
                     ('BACKGROUND', (0, 0), (-1, 0), colors.gray),
-                    ('BACKGROUND', (0, -1), fin, colors.gray)
+                    ('BACKGROUND', (0, 0), (0,-1), colors.gray)
                 ])
             story.append(table)
             d = Drawing(600, 200)
@@ -164,8 +166,20 @@ def main():
             bc.barSpacing = 4
             bc.barLabelFormat = '$%d'
             bc.barLabels.nudge = 7
-            #bc.categoryAxis.style = 'stacked'  # Una variación del gráfico
+
+            legend=Legend()
+            legend.x                       = 20
+            legend.y                       = 0
+            legend.boxAnchor               = 'se'
+            legend.subCols[1].align        = 'right'
+            legend.alignment               = 'right'
+            legend.columnMaximum           = 9
+            legend.fontSize                = 13
+            # these data can be read from external sources
+
+            legend.colorNamePairs=Auto(obj=bc)
             d.add(bc)
+            d.add(legend)
             #pprint.pprint(bc.getProperties())
             story.append(d)
             #print(totales)
@@ -195,6 +209,7 @@ def main():
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
+                totales.append(head)
                 for valor in cursor:
                     producto = []
                     if (k < 12):
@@ -211,7 +226,7 @@ def main():
                     table.setStyle([
                         ("BOX", ini, fin, 0.25, colors.black),
                         ('INNERGRID', ini, fin, 0.25, colors.black),
-                        ('BACKGROUND', ini, fin, bg_color)
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.gray)
                     ])
                 story.append(Spacer(10, 20))
                 story.append(table)
@@ -222,7 +237,7 @@ def main():
         if (int(descriptores[4][1:])):
             print("Huracan")
 
-            story.append(Paragraph('Ventas por Huracan', styles['title']))
+            story.append(Paragraph('Ventas Huracan', styles['title']))
             connection_ddbb = cx_Oracle.connect(usr, passw, "localhost")
             cursor = connection_ddbb.cursor()
             
@@ -243,6 +258,7 @@ def main():
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
+                totales.append(head)
                 for valor in cursor:
                     producto = []
                     if (k < 12):
@@ -261,7 +277,7 @@ def main():
                     table.setStyle([
                         ("BOX", ini, fin, 0.25, colors.black),
                         ('INNERGRID', ini, fin, 0.25, colors.black),
-                        ('BACKGROUND', ini, fin, bg_color)
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.gray)
                     ])
                 story.append(Spacer(10, 20))
                 story.append(table)
@@ -295,6 +311,7 @@ def main():
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
+                totales.append(head)
                 for valor in cursor:
                     producto = []
                     if (k < 12):
@@ -311,7 +328,7 @@ def main():
                     table.setStyle([
                         ("BOX", ini, fin, 0.25, colors.black),
                         ('INNERGRID', ini, fin, 0.25, colors.black),
-                        ('BACKGROUND', ini, fin, bg_color)
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.gray)
                     ])
                 story.append(Spacer(10, 20))
                 story.append(table)
@@ -339,6 +356,7 @@ def main():
                 story.append(Paragraph('Año:'+i, styles['Center']))
                 k= 0
                 totales = []
+                totales.append(head)
                 for valor in cursor:
                     producto = []
                     if (k < 20):
@@ -356,7 +374,7 @@ def main():
                     table.setStyle([
                         ("BOX", ini, fin, 0.25, colors.black),
                         ('INNERGRID', ini, fin, 0.25, colors.black),
-                        ('BACKGROUND', ini, fin, bg_color)
+                        ('BACKGROUND', (0, 0), (-1, 0), colors.gray)
                     ])
                 story.append(Spacer(10, 20))
                 story.append(table)
@@ -367,25 +385,6 @@ def main():
     channel.basic_consume(queue='estadisticos', on_message_callback = callback, auto_ack = True)
     print("esperando mensajes: ")
     channel.start_consuming()
-
-
-    #consultas
-
-    def ventas_totales (pos,periodos):#ventas totales en cada periodo -> periodos[],totales[]
-        return 0   
-    def familia_más_ventas():# que familia es al que vendió más por cada periodo -> periodos[años],familia[string],ventas[valor]
-        return 0
-    def Productos_más_vendido():#top 5 productos más vendidos, periodos [años],productos[largo(años)][nombre producto],totalproducto[largo(años)][valor_total]
-        return 0
-    def ventas_total_familia_descriptivo(pos,periodo):# periodos[años],ventas_t[len(perodos)][4]
-        return 0
-    def comparativo_Suralum(pos,periodo):#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][7 valores]
-        return 0
-    def comparativo_Huracán(pos,periodo):#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
-        return 0
-    def Comparativo_Industrial():#productos más vendidos en suralum,ventatotalproducto[largo(periodos)][? valores]
-        return 0
-
 
 if __name__=='__main__':
     try:
