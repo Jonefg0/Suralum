@@ -12,10 +12,13 @@ def menu_pantalla():
 
     Label(ventanamain,text ="Acceso al sistema",bg="royal blue",fg="white",width="300",font=("Helvetica",15)).pack()
     Label(ventanamain,text ="").pack()
+    global imagen
+    imagen = PhotoImage(file="bg.gif")
 
 
     Button(ventanamain,text = "Iniciar sesión",height="3",width="30",bg = "blue",command = inicio_sesion).pack()
     Button(ventanamain,text = "Registro(Under construction)",height="3",width="30").pack()
+
 
     ventanamain.mainloop()
 
@@ -38,6 +41,7 @@ def validaciondatos():
 
 def inicio_sesion():
     ventanamain.withdraw()
+
     global ventana_sesion
     ventana_sesion = Toplevel(ventanamain)
     ventana_sesion.geometry("500x300")
@@ -118,7 +122,7 @@ def ventana_principal():
     periodos = []
     #imagen = PhotoImage(file = "bg.png")
     #Label(ventana,image=imagen).place(x=0,y=0)
-    imagen = PhotoImage(file="bg.gif")
+    
     Label(ventana,image=imagen).place(x=0,y=0)
 
 
