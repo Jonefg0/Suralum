@@ -104,7 +104,7 @@ def ventana_principal():
 
     #Ventana y variables
     ventana = Toplevel(ventanamain)
-    ventana.geometry("900x600")
+    ventana.geometry("800x600")
     ventana.title("Estadisticas Suralum")
     #frame_fechas = Frame(ventana,bg = "black").place(x = 500,y = 200)
     estadistico_1 = IntVar()
@@ -116,41 +116,43 @@ def ventana_principal():
     estadistico_7 = IntVar()
     periodo = StringVar()
     periodos = []
-    #imagen = PhotoImage(file="bg.gif")
+    #imagen = PhotoImage(file = "bg.png")
     #Label(ventana,image=imagen).place(x=0,y=0)
+    imagen = PhotoImage(file="bg.gif")
+    Label(ventana,image=imagen).place(x=0,y=0)
 
 
-    #cabecera
-    titulo = Label(ventana,text = "Estadisticas Suralum", bg = "blue",fg = "white", font = ("Times New Roman",24)).place(x=330,y=5)
+    #cabeceratitulo = Label(ventana,text = "Estadisticas Suralum", bg = '#FFF9C2',fg = '#274a99', font = ("Helvetica",24,"bold")).place(x=230,y=80)
+    titulo = Label(ventana,text = "Estadisticas Suralum", bg = '#FFF9C2',fg = '#274a99', font = ("Helvetica",24,"bold")).place(x=230,y=80)
     #descriptores
-    titulo_descriptores = Label(ventana,text = "Descriptores", font = ("Helvetica",18)).place(x = 100, y = 70)
-    vt_button = Checkbutton(ventana,text="Ventas Totales",onvalue = 1,offvalue = 0, variable = estadistico_1, font = ("Helvetica",18)).place(x = 100, y = 100)
-    vxl_button = Checkbutton(ventana,text="Ventas por línea",onvalue = 1,offvalue = 0, variable = estadistico_2, font = ("Helvetica",18)).place(x = 100, y = 130)
-    vxf_button = Checkbutton(ventana,text="Ventas por familia", onvalue = 1,offvalue = 0, variable = estadistico_3, font = ("Helvetica",18)).place(x = 100, y = 160)
-    vxs_button = Checkbutton(ventana,text="Ventas Suralum", onvalue = 1,offvalue = 0, variable = estadistico_4, font = ("Helvetica",18)).place(x = 100, y = 190)
-    vxh_button = Checkbutton(ventana,text="Ventas Huracán",onvalue = 1,offvalue = 0, variable = estadistico_5, font = ("Helvetica",18)).place(x = 100, y = 220)
-    vxi_button = Checkbutton(ventana,text="Ventas Industrial",onvalue = 1,offvalue = 0, variable = estadistico_6, font = ("Helvetica",18)).place(x = 100, y = 250)
-    pmv_button = Checkbutton(ventana,text="Producto más vendido",onvalue = 1,offvalue = 0, variable = estadistico_7, font = ("Helvetica",18)).place(x = 100, y = 280)
+    titulo_descriptores = Label(ventana,text = "Descriptores", font = ("Helvetica",18,"bold"),bg = '#FFF9C2').place(x = 450, y = 140)
+
+    vt_button = Checkbutton(ventana,text="Ventas Totales",onvalue = 1,offvalue = 0, variable = estadistico_1, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 180)
+    vxl_button = Checkbutton(ventana,text="Ventas por línea",onvalue = 1,offvalue = 0, variable = estadistico_2, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 210)
+    vxf_button = Checkbutton(ventana,text="Ventas por familia", onvalue = 1,offvalue = 0, variable = estadistico_3, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 240)
+    vxs_button = Checkbutton(ventana,text="Ventas Suralum", onvalue = 1,offvalue = 0, variable = estadistico_4, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 270)
+    vxh_button = Checkbutton(ventana,text="Ventas Huracán",onvalue = 1,offvalue = 0, variable = estadistico_5, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 300)
+    vxi_button = Checkbutton(ventana,text="Ventas Industrial",onvalue = 1,offvalue = 0, variable = estadistico_6, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 330)
+    pmv_button = Checkbutton(ventana,text="Producto más vendido",onvalue = 1,offvalue = 0, variable = estadistico_7, font = ("Helvetica",14),bg = '#FFF9C2').place(x = 450, y = 360)
 
 
     #ingreso de periodos
+    titulo_fechas = Label(ventana,text = "Periodos", font = ("Helvetica",18,"bold"),bg = '#FFF9C2').place(x = 20, y = 140 )
+    cta_fechas = Label(ventana, text = "Ingrese año: ", font = ("Helvetica",14),bg = '#FFF9C2').place(x = 20, y = 180)
+    caja_año = Entry(ventana, textvar = periodo, font = ("Helvetica",14),bg = "white",width = "6").place(x = 140, y = 180)
+    f_button = Button(ventana, text ="Agregar",font = ("Helvetica",12),bg = '#274a99', fg="white", command = agregar_periodo).place(x = 220, y = 178)
 
-    titulo_fechas = Label(ventana,text = "Periodos", font = ("Helvetica",18)).place(x = 500, y = 70 )
-    cta_fechas = Label(ventana, text = "Ingrese año: ", font = ("Helvetica",18)).place(x = 500, y = 100)
-    caja_año = Entry(ventana, textvar = periodo, font = ("Helvetica",18),width = "5").place(x = 650, y = 100)
-    f_button = Button(ventana, text ="Agregar",font = ("Helvetica",18),command = agregar_periodo).place(x = 750, y = 97)
-
-    #periodos agregados
-
-    lista = Listbox(ventana)
-    lista.pack()
-    lista.place(x = 500, y = 160)
-    borrar_button = Button(ventana, text = "Borrar periodo", font = ("Helvetica",18), command = borrar_periodo).place(x = 670, y = 160)
-
-
+    lista = Listbox(ventana, width=46)
+    lista.pack() 
+    lista.place(x = 20, y = 240)
+        
+    borrar_button = Button(ventana, text = "Borrar periodo", font = ("Helvetica",12),bg = '#274a99', fg="white", width=30, command = borrar_periodo).place(x = 20, y = 420)
 
     #botón generar reporte
-    r_button = Button(ventana, text = "Generar reporte", padx = 10, pady = 10, command = generar_reporte, font = ("Helvetica",16)).place(x = 700, y = 500 )
+    r_button = Button(ventana, text = "Generar reporte", padx = 10, pady = 10, bg = '#274a99', fg="white", width=13, command = generar_reporte, font = ("Helvetica",14)).place(x = 600, y = 520 )
+
+    #botón cerrar sesión
+    c_button = Button(ventana, text ="Cerrar Sesión",font = ("Helvetica",12),bg = '#274a99', fg="white", command=ventana.destroy).place(x = 600, y = 25)
 
 
 menu_pantalla()
