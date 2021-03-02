@@ -6,20 +6,26 @@ import cx_Oracle
 
 def menu_pantalla():
     global ventanamain
+
     ventanamain = Tk()
-    ventanamain.geometry("500x400")
+    ventanamain.geometry("600x298")
     ventanamain.title("Bienvenido al Sistema Suralum")
 
-    Label(ventanamain,text ="Acceso al sistema",bg="royal blue",fg="white",width="300",font=("Helvetica",15)).pack()
-    Label(ventanamain,text ="").pack()
-    global imagen
-    imagen = PhotoImage(file="bg.gif")
+    global imagen, imagen2 
+    imagen = PhotoImage(file = "bg.png")
+    imagen2 = PhotoImage(file = "login.png")
 
+    ventanamain.resizable(width=False, height=False)
 
-    Button(ventanamain,text = "Iniciar sesión",height="3",width="30",bg = "blue",command = inicio_sesion).pack()
-    Button(ventanamain,text = "Registro(Under construction)",height="3",width="30").pack()
+    Label(ventanamain, image = imagen2).place(x=-2,y=-2)
 
+    Label(ventanamain,text = "Acceso al Sistema", bg='#d6d6d6', font = ("Helvetica",10,"bold")).place(x=290,y=20)
+    #Label(ventanamain,text ="").pack()
 
+    Button(ventanamain,text = "Iniciar sesión",height="3",width="30",bg = '#274a99', fg="white",command = inicio_sesion).place(x=240,y=80)
+    Button(ventanamain,text = "Registro(Under construction)",height="3",width="30",bg='#d6d6d6').place(x=240, y=130)
+
+    
     ventanamain.mainloop()
 
 def validaciondatos():
@@ -41,14 +47,16 @@ def validaciondatos():
 
 def inicio_sesion():
     ventanamain.withdraw()
-
     global ventana_sesion
     ventana_sesion = Toplevel(ventanamain)
     ventana_sesion.geometry("500x300")
     ventana_sesion.title("Inicio de sesion")
+    ventana_sesion.resizable(width=False, height=False)
 
-    Label(ventana_sesion,text = "Ingrese su Usuario y  Contraseña").pack()
-    Label(ventana_sesion,text = "").pack()
+    Label(ventana_sesion, image = imagen2).place(x=-2,y=-2)
+    
+    Label(ventana_sesion,text = "Ingrese su Usuario y  Contraseña", bg='#d6d6d6', font = ("Helvetica",10,"bold")).place(x=240,y=20)
+    #Label(ventana_sesion,text = "").pack()
 
     global nombreusuario_verify 
     global contrasenausuario_verify
@@ -59,16 +67,16 @@ def inicio_sesion():
     global nombreusuario_entry 
     global constrasenausuario_entry
 
-    Label(ventana_sesion,text = "Usuario").pack()
-    nombreusuario_entry = Entry(ventana_sesion,textvariable = nombreusuario_verify)
-    nombreusuario_entry.pack()
-    Label(ventana_sesion).pack()
+    Label(ventana_sesion,text = "Usuario", bg='#d6d6d6', font = ("Helvetica",10)).place(x=315,y=70)
+    nombreusuario_entry = Entry(ventana_sesion,textvariable = nombreusuario_verify).place(x=280,y=100)
+    #nombreusuario_entry.pack()
+    #Label(ventana_sesion).pack()
 
-    Label(ventana_sesion,text = "Contraseña").pack()
-    constrasenausuario_entry = Entry(ventana_sesion,textvariable = contrasenausuario_verify)
-    constrasenausuario_entry.pack()
-    Label(ventana_sesion).pack()
-    Button(ventana_sesion,text ="A darle átomos",command = validaciondatos).pack()
+    Label(ventana_sesion,text = "Contraseña", bg='#d6d6d6', font = ("Helvetica",10)).place(x=305,y=130)
+    constrasenausuario_entry = Entry(ventana_sesion,textvariable = contrasenausuario_verify, show='*').place(x=280,y=160)
+    #constrasenausuario_entry.pack()
+    #Label(ventana_sesion).pack()
+    Button(ventana_sesion,text ="Iniciar Sesión", bg = '#274a99', fg="white", command = validaciondatos).place(x=301,y=200)
 
 
 
@@ -122,9 +130,9 @@ def ventana_principal():
     periodos = []
     #imagen = PhotoImage(file = "bg.png")
     #Label(ventana,image=imagen).place(x=0,y=0)
-    
-    Label(ventana,image=imagen).place(x=0,y=0)
+    ventana.resizable(width=False, height=False)
 
+    Label(ventana, image = imagen).place(x=-2,y=-2)
 
     #cabeceratitulo = Label(ventana,text = "Estadisticas Suralum", bg = '#FFF9C2',fg = '#274a99', font = ("Helvetica",24,"bold")).place(x=230,y=80)
     titulo = Label(ventana,text = "Estadisticas Suralum", bg = '#FFF9C2',fg = '#274a99', font = ("Helvetica",24,"bold")).place(x=230,y=80)
@@ -159,8 +167,7 @@ def ventana_principal():
     c_button = Button(ventana, text ="Cerrar Sesión",font = ("Helvetica",12),bg = '#274a99', fg="white", command=ventana.destroy).place(x = 600, y = 25)
 
 
+
+
+
 menu_pantalla()
-
-
-
-

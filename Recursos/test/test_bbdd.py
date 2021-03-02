@@ -17,15 +17,54 @@ año ='2019'
            #         productos.descripcion
             #    ORDER BY
              #       v ASC"""
-nombreusuario_verify= 'brain'
-contrasenausuario_verify='brain'
+#nombreusuario_verify= 'brain'
+#contrasenausuario_verify='brain'
+#cursor.execute("SELECT total,opeid FROM ventas WHERE EXTRACT(YEAR FROM fecha) = 2017")
+#descontar = 0
+#for valor in cursor:
+ #   print ("opeid:", valor[1],"total:",valor[0])
+    
+    #else:
+     # total = total +valor[0]
+#print("desc:",descontar)
+#print("total:",total)    
 
-cursor.execute("SELECT password FROM  users WHERE username='"+nombreusuario_verify+"' and password='"+contrasenausuario_verify+"'")
 
-if cursor.fetchall():
-    print("INICIO CORRECTO")
-else:
-    print("NACA LA PIRINACA")
+#cursor.execute("SELECT SUM(total) FROM ventas WHERE (EXTRACT(YEAR FROM fecha) = 2017 AND opeid NOT IN (50, 52, 55, 56, 60, 61))")
+#descontar = 0
+#total = 0
+#for valor in cursor:
+ #     total = total +valor[0]
+#print("desc:",descontar)
+#print("total:",total)    
+
+
+cursor.execute("SELECT subtotal,opeid FROM ventas WHERE EXTRACT(YEAR FROM fecha) = 2017")
+descontar = 0
+total = 0
+for valor in cursor:
+    print ("opeid:", valor[1],"total:",valor[0])
+    if (valor[1]!=52 and valor[1]!=50):
+      if ((valor[1]==61)):#descuentos
+        descontar = descontar +valor[0]
+      if(valor[1]==33 or valor[1]==56 or valor[1]==30):#totales
+        total = total + valor[0]
+
+
+
+print("desc:",descontar)
+print("total:",total)   
+print("total real :", total-descontar) 
+
+
+
+
+
+
+#if cursor.fetchall():
+   # print("INICIO CORRECTO")
+#else:
+#    print("NACA LA PIRINACA")
 
 #cursor.execute("SELECT id_venta, subtotal, fecha FROM ventas WHERE EXTRACT(YEAR FROM fecha) = " + año)
 

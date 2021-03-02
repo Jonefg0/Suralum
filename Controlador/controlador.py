@@ -17,8 +17,8 @@ from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.validators import Auto
 import pprint
 import locale
-usr='ragde'
-passw='erty8040'
+usr='nathan'
+passw='m94'
 logotipo = "logo.png"
 head=('Producto','Total vendidos','Total Ventas')
 
@@ -37,6 +37,10 @@ def main():
         aux = mensaje.split('#')
         periodos = aux[0][2:-4].split(",")
         descriptores = aux [1][4:-2].split(",")
+        print(periodos)
+        a = periodos
+        a.sort()
+        print(a)
         #valor = int(descriptores[0])
         #print("valor:",valor)
         #año = int(años_final[0][1:-1])
@@ -212,7 +216,7 @@ def main():
                 totales.append(head)
                 for valor in cursor:
                     producto = []
-                    if (k < 12):
+                    if (k < 26):
                         producto.append(valor[0])#nombre
                         producto.append(valor[1])#totales_ccantidad
                         producto.append(valor[2])#totales_ventas
@@ -261,7 +265,7 @@ def main():
                 totales.append(head)
                 for valor in cursor:
                     producto = []
-                    if (k < 12):
+                    if (k < 26):
                         producto.append(valor[0])#nombre
                         producto.append(valor[1])#totales_ccantidad
                         producto.append(valor[2])#totales_ventas
@@ -314,7 +318,7 @@ def main():
                 totales.append(head)
                 for valor in cursor:
                     producto = []
-                    if (k < 12):
+                    if (k < 26):
                         producto.append(valor[0])#nombre
                         producto.append(valor[1])#totales_ccantidad
                         producto.append(valor[2])#totales_ventas
@@ -359,7 +363,7 @@ def main():
                 totales.append(head)
                 for valor in cursor:
                     producto = []
-                    if (k < 20):
+                    if (k < 26):
                         producto.append(valor[0])#nombre
                         producto.append(valor[1])#totales_ccantidad
                         producto.append(valor[2])#totales_ventas
