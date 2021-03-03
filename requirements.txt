@@ -1,0 +1,4 @@
+reportlab
+pillow
+pika
+cx_Oracle

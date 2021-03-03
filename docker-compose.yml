@@ -1,0 +1,18 @@
+version: "3"
+   
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    ports:
+      - 1521:1521
+  app:
+    build: .
+    command: tail -f /dev/null
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
